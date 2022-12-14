@@ -26,10 +26,9 @@ app.get('/', (req, res) => {
 app.use('/register', User);
 app.use('/payment', Payment);
 
-app.listen(process.env.PORT || 5000, () =>
-  ConnectDB()
-    .then(() => console.log('Server is up and running'))
-    .catch(() =>
-      console.log('Server is running , but database connection failed')
-    )
-);
+//Connect to the database before listening
+ConnectDB().then(() => {
+  app.listen(process.env.PORT || 5000, () => {
+      console.log("Server is up and running");
+  })
+})
